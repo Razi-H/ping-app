@@ -39,7 +39,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased overscroll-none !bg-gray-50`} id="root">
+        className={`${geistSans.variable} ${geistMono.variable} antialiased overscroll-none !bg-gray-50 h-dvh`} id="root">
         {children}
       </body>
     </html>

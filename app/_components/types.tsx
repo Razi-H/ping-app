@@ -2,11 +2,12 @@ import { MouseEventHandler } from "react"
 import { IconType } from "./Icon";
 
 export type MenuItemType = {
+    id: number,
     text: string,
     subtitle: string,
     iconType: IconType
     onclick?: () => void,
-    onItemSelect?: (id: string) => void
+    onItemSelect?: (id: number) => void
 }
 
 export type Queue = {

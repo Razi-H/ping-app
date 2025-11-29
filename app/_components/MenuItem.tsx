@@ -2,14 +2,14 @@ import { MouseEventHandler } from "react";
 import { MenuItemType } from "./types";
 import Icon from "./Icon";
 
-export default function MenuItem({ text, subtitle, onclick, iconType, onItemSelect }: MenuItemType) {
+export default function MenuItem({id, text, subtitle, onclick, iconType, onItemSelect }: MenuItemType) {
 
     const handleClick = () => {
-        onItemSelect?.(text);
+        onItemSelect?.(id);
         onclick?.();
     }
 
-    return (<div className="flex flex-row-reverse py-3 hover:bg-gray-100" onClick={handleClick}>
+    return (<div className="flex flex-row-reverse py-3 hover:bg-gray-100 active:bg-gray-100" onClick={handleClick}>
         <div className="mx-3">
             <div className='w-12 h-12 bg-blue-500 rounded-3xl flex items-center justify-center'>
                 <Icon type={iconType} />

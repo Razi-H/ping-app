@@ -1,5 +1,5 @@
 export default function TopBar({ title }: { title: string }) {
-    return (<div className='flex h-12 pt-3 bg-white border-b border-gray-200'>
+    return (<div className='flex h-12 pt-3  border-b border-gray-200 flex-none'>
         <div className='w-14 px-4'>
 
         </div>

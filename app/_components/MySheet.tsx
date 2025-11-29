@@ -1,9 +1,9 @@
-import { ReactElement, useContext } from "react";
+import { ReactNode, useContext } from "react";
 import { Sheet } from 'react-modal-sheet';
 import AppContext from "../AppContext";
 
 
-export default function MySheet({children }: {children?: ReactElement | ReactElement[] }) {
+export default function MySheet({children }: {children?: ReactNode }) {
     const {isOpen, setOpen} = useContext(AppContext);
 
     return (<Sheet
