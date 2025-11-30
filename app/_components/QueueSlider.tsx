@@ -60,7 +60,7 @@ export default function QueueSlider({ queues, splide, showLoading, setSelectedQu
                 <button className="splide__arrow splide__arrow--prev hidden!">Prev</button>
                 <button className="splide__arrow splide__arrow--next hidden!">Next</button>
             </div>
-            <ul className="splide__pagination absolute bottom-8!"></ul>
+            <ul className="splide__pagination absolute bottom-2!"></ul>
             {/* 
                 <button className="splide__toggle" type="button">
                     <span className="splide__toggle__play">Play</span>
