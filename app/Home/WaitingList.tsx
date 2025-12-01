@@ -16,6 +16,22 @@ export default function WaitingList({ queueId }: { queueId: number }) {
             .then(data => setWaitingList(data));
     }, [])
 
+    const getInterval = (i: number): string => {
+        if (i < 60)
+            return `${i} ثانیه پیش`
+
+        if (i < 3600)
+            return `${Math.floor(i / 60)} دقیقه پیش`
+
+        if (i < 24 * 3600)
+            return `${Math.floor(i / (60 * 60))} ساعت پیش`
+
+        if (i < 24 * 3600 * 7)
+            return `${Math.floor(i / (60 * 60 * 24))} روز پیش`
+
+        return `${Math.floor(i / (60 * 60 * 24 * 7))} هفته پیش`
+    }
+
 
     return (
         <div className='w-full flex-col pb-4 min-h-100 relative'>
@@ -40,14 +56,14 @@ export default function WaitingList({ queueId }: { queueId: number }) {
                     </div>
                     <div className="mt-4">در حال بارگذاری</div>
                 </div>}
-                {waitingList.filter((item: { queueUserStatusId: number; }) => showHistory || (!showHistory && item.queueUserStatusId <= 2)).map(({ gender, family, id, queueUserStatusId, name, pings }: { gender: string; family: string; id: number; queueUserStatusId: number; name: string; pings: any }, index: number) => {
+                {waitingList.filter((item: { queueUserStatusId: number; }) => showHistory || (!showHistory && item.queueUserStatusId <= 2)).map(({ gender, family, id, queueUserStatusId, name, pings, interval }: { gender: string; family: string; id: number; queueUserStatusId: number; name: string; pings: any; interval: number }, index: number) => {
                     return (<div key={id} className=' w-full flex flex-col bg-gray-50 even:bg-white'>
                         <div className=' flex flex-row-reverse py-3 text-sm  w-full' onClick={() => setExpandedItem(v => v === id ? 0 : id)}>
                             <div className='text-center px-4'>{index + 1}</div>
-                            <div className='text-right flex-1'>{`${gender == "1" ? "آقای" : "خانم"} ${family}`}</div>
+                            <div className='text-right grow-1'>{`${gender == "1" ? "آقای" : "خانم"} ${family} (${getInterval(interval)})`}</div>
                             {/* <div className='text-right'>09123840815</div> */}
-                            <div className='text-center direction-rtl flex-1 text-xs'>2 دقیقه پیش</div>
-                            <div className='pl-4 text-left flex-1'><span className={`badge-${queueUserStatusId}`}>{name}</span></div>
+                            {/* <div className='text-center direction-rtl flex-1 text-xs'></div> */}
+                            <div className='pl-4 text-left'><span className={`badge-${queueUserStatusId}`}>{name}</span></div>
                         </div>
                         <div className={`w-full px-5 ${expandedItem === id ? 'max-h-[200px] overflow-auto' : 'max-h-0 overflow-hidden'} transition-[max-height] duration-700 ease-in-out`}>
                             {pings.map(({ pingStatusId, setupDate, sequanceNumber }: { pingStatusId: number; setupDate: string; sequanceNumber: number; }, index: number) => {
