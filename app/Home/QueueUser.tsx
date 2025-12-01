@@ -13,14 +13,6 @@ export default function QueueUser({ queueId }: { queueId: number }) {
             .then(data => setQueueUser(data));
     }, [])
 
-    const call = () => {
-        fetch(`http://192.168.88.24:3002/Api/Ping?queueId=${queueId}`)
-            .then(result => result.json())
-            .then(data => alert(JSON.stringify(data)));
-    }
-
-
-
     return (
         <div className="mx-5">
             {queueUser != null && queueUser.id !== 0 &&

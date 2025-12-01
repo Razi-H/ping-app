@@ -38,7 +38,7 @@ export default function AddUser({ queueId }: { queueId: number }) {
                         color: '#fff',
                     },
                 });
-            }, 500); context.reload?.(); context.setOpen(false);
+            }, 500); context.reload?.(); setTimeout(() => { context.setOpen(false); }, 500);
         });
     }
 
