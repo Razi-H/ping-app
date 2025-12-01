@@ -14,6 +14,7 @@ import TopBar from './_components/TopBar';
 import AppContext from './AppContext';
 import QueueUser from './Home/QueueUser';
 import toast, { Toaster, toast as toastEvent, useToaster } from 'react-hot-toast';
+import PingTag from './Home/PingTag';
 
 export default function Home() {
     const splide = useRef<any>(null);
@@ -28,10 +29,10 @@ export default function Home() {
 
     const [isPing, setIsPing] = useState<boolean>(false);
 
-    const ping = (queueUserId: number) => {
+    const ping = (queueUserId: number, cancel: boolean = false) => {
         setOpen(false);
         setIsPing(true);
-        fetch(`http://192.168.88.24:3002/Api/Ping?queueUserId=${queueUserId}`)
+        fetch(`http://192.168.88.24:3002/Api/Ping?queueUserId=${queueUserId}&cancel=${cancel ? 1 : 0}`)
             .then(result => result.json())
             .then(data => {
                 setTimeout(() => {
@@ -41,7 +42,7 @@ export default function Home() {
                             background: '#333',
                             color: '#fff',
                         },
-                    }); setIsPing(false);
+                    }); setIsPing(false); getQueues();
                 }, 500)
             });
     }
@@ -76,7 +77,7 @@ export default function Home() {
                     <Menu onItemSelect={(id) => { setSelectedMenuId(id); setOpen(true) }}>
                         <MenuItem id={1} text='افزودن به لیست انتظار' subtitle='افزودن فرد جدید به لیست انتظار' iconType={IconType.AddPerson} />
                         <MenuItem id={4} text='لیست انتظار' subtitle='نمایش افراد در لیست انتظار' iconType={IconType.Group} />
-                        <MenuItem id={2} text='فراخوانی خودکار' subtitle='فراخوانی نفر اول لیست انتظار' iconType={IconType.Dial} onclick={getQueues} />
+                        <MenuItem id={2} text='فراخوانی خودکار' subtitle='فراخوانی نفر اول لیست انتظار' iconType={IconType.Dial} /*onclick={getQueues}*/ />
                         <MenuItem id={3} text='فراخوانی با تگ' subtitle='فراخوانی از طریق تگ فراخوانی' iconType={IconType.Tag} />
                         {/* <MenuItem id={5} text='جستجو' subtitle='جستجو در لیست انتظار' iconType={IconType.Search} /> */}
                         {/* <MenuItem id={6} text='حذف لیست' subtitle='حذف لیست انتظار' iconType={IconType.Delete} /> */}
@@ -107,6 +108,7 @@ export default function Home() {
                     {selectedMenuId === 1 && <AddUser queueId={selectedQueueId} />}
                     {selectedMenuId === 2 && <QueueUser queueId={selectedQueueId} />}
                     {selectedMenuId === 4 && <WaitingList queueId={selectedQueueId} />}
+                    {selectedMenuId === 3 && <PingTag queueId={selectedQueueId} />}
                 </MySheet>
                 <BottomBar />
             </div>

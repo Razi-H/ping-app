@@ -75,7 +75,10 @@ export default function WaitingList({ queueId }: { queueId: number }) {
                                 </div>)
                             }
                             )}
-                            {queueUserStatusId !== 2 && <div> <button onClick={() => ping?.(id)} className="w-full mb-6 mt-6 text-white bg-blue-500 hover:bg-gray-900 active:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-xl text-sm px-5 py-3 me-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700" >{`فراخوانی ${queueUserStatusId > 2 ? 'مجدد' : ''}`}</button></div>}
+                            <div className="flex flex-row-reverse">
+                                {queueUserStatusId !== 2 && queueUserStatusId !== 5 && <button onClick={() => ping?.(id)} className="flex-3 w-full mb-6 mt-6 text-white bg-blue-700 hover:bg-gray-900 active:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-xl text-sm px-5 py-3 me-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700" >{`فراخوانی ${queueUserStatusId > 2 ? 'مجدد' : ''}`}</button>}
+                                {queueUserStatusId <= 2 && <button onClick={() => ping?.(id, true)} className="flex-1 w-full mb-6 mt-6 text-white bg-red-700 hover:bg-gray-900 active:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-xl text-sm px-5 py-3 me-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700" >انصراف</button>}
+                            </div>
 
                         </div>
                     </div>);
