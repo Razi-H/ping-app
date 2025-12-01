@@ -16,10 +16,10 @@ export default function QueueSlide({ queueId, name, waitingNumber, totalNumber, 
 
                                 <circle cx="18" cy="18" r="16" fill="none" className="stroke-current text-gray-400 dark:text-neutral-700" strokeWidth="4"></circle>
                                 /
-                                <circle cx="18" cy="18" r="16" fill="none" className="stroke-current text-white dark:text-blue-500" strokeWidth="4" strokeDasharray="100" strokeDashoffset={100 - Math.floor(waitingNumber * 100 / totalNumber)} strokeLinecap="round"></circle>
+                                <circle cx="18" cy="18" r="16" fill="none" className="stroke-current text-white dark:text-blue-500" strokeWidth="4" strokeDasharray="100" strokeDashoffset={100 - (totalNumber !== 0 ? Math.floor(waitingNumber * 100 / totalNumber) : 0)} strokeLinecap="round"></circle>
                             </svg>
                             <div className="absolute top-1/2 start-1/2 transform -translate-y-1/2 -translate-x-1/2">
-                                <span className="text-center text-md font-bold text-white dark:text-blue-500">{Math.floor(waitingNumber * 100 / totalNumber)}% </span>
+                                <span className="text-center text-md font-bold text-white dark:text-blue-500">{totalNumber !== 0 ? Math.floor(waitingNumber * 100 / totalNumber) : 0}% </span>
                             </div>
                         </div>
                     </div>
