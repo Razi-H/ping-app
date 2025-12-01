@@ -1,6 +1,7 @@
 import { useContext, useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form"
 import AppContext from "../AppContext";
+import toast from "react-hot-toast";
 
 type Inputs = {
     family: string,
@@ -28,7 +29,17 @@ export default function AddUser({ queueId }: { queueId: number }) {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(data)
-        }).then(res => res.json()).then(result => { alert(JSON.stringify(result)); context.reload?.();context.setOpen(false); });
+        }).then(res => res.json()).then(result => {
+            setTimeout(() => {
+                toast(result.message, {
+                    style: {
+                        borderRadius: '10px',
+                        background: '#333',
+                        color: '#fff',
+                    },
+                });
+            }, 500); context.reload?.(); context.setOpen(false);
+        });
     }
 
     const onSubmit: SubmitHandler<Inputs> = (data) => post({ ...data, queueId, pingTag: data.showPingTag ? data.pingTag : null });

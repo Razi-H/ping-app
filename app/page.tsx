@@ -13,6 +13,7 @@ import MySheet from './_components/MySheet';
 import TopBar from './_components/TopBar';
 import AppContext from './AppContext';
 import QueueUser from './Home/QueueUser';
+import toast, { Toaster, toast as toastEvent, useToaster } from 'react-hot-toast';
 
 export default function Home() {
     const splide = useRef<any>(null);
@@ -32,7 +33,17 @@ export default function Home() {
         setIsPing(true);
         fetch(`http://192.168.88.24:3002/Api/Ping?queueUserId=${queueUserId}`)
             .then(result => result.json())
-            .then(data => { alert(JSON.stringify(data)); setIsPing(false); });
+            .then(data => {
+                setTimeout(() => {
+                    toast(data.message, {
+                        style: {
+                            borderRadius: '10px',
+                            background: '#333',
+                            color: '#fff',
+                        },
+                    }); setIsPing(false);
+                }, 500)
+            });
     }
 
     const getQueues = () => {
@@ -54,6 +65,8 @@ export default function Home() {
 
     return (
         <AppContext value={{ isOpen: isOpen, setOpen: setOpen, reload: getQueues, ping: ping }}>
+            <div><Toaster /></div>
+            {/* <div className='fixed inset-0 bg-black/10 backdrop-blur-xs transition-all duration-300 z-[999]'></div> */}
             <div className='max-w-lg mx-auto bg-gray-50 relative flex flex-col h-full'>
                 <TopBar title='رستوران فرناز' />
                 <div className='flex-none'>
@@ -62,10 +75,10 @@ export default function Home() {
                 <div className='grow overflow-auto bg-gray-50'>
                     <Menu onItemSelect={(id) => { setSelectedMenuId(id); setOpen(true) }}>
                         <MenuItem id={1} text='افزودن به لیست انتظار' subtitle='افزودن فرد جدید به لیست انتظار' iconType={IconType.AddPerson} />
+                        <MenuItem id={4} text='لیست انتظار' subtitle='نمایش افراد در لیست انتظار' iconType={IconType.Group} />
                         <MenuItem id={2} text='فراخوانی خودکار' subtitle='فراخوانی نفر اول لیست انتظار' iconType={IconType.Dial} onclick={getQueues} />
                         <MenuItem id={3} text='فراخوانی با تگ' subtitle='فراخوانی از طریق تگ فراخوانی' iconType={IconType.Tag} />
-                        <MenuItem id={4} text='لیست انتظار' subtitle='نمایش افراد در لیست انتظار' iconType={IconType.Group} />
-                        <MenuItem id={5} text='جستجو' subtitle='جستجو در لیست انتظار' iconType={IconType.Search} />
+                        {/* <MenuItem id={5} text='جستجو' subtitle='جستجو در لیست انتظار' iconType={IconType.Search} /> */}
                         {/* <MenuItem id={6} text='حذف لیست' subtitle='حذف لیست انتظار' iconType={IconType.Delete} /> */}
                     </Menu>
                 </div>
