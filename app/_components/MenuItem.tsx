@@ -6,7 +6,8 @@ export default function MenuItem({ id, text, subtitle, onclick, iconType, onItem
 
     const handleClick = () => {
         onItemSelect?.(id);
-        onclick?.();
+        if (!disabled)
+            onclick?.();
     }
 
     return (<div className="flex flex-row-reverse py-3 hover:bg-gray-100 active:bg-gray-100" onClick={() => disabled ? () => { } : handleClick()}>

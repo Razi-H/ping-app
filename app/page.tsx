@@ -30,6 +30,14 @@ export default function Home() {
 
     const [isPing, setIsPing] = useState<boolean>(false);
 
+    let selectedQueue = (): Queue | undefined => {
+        return queues.find(q => q.queueId == selectedQueueId);
+    }
+
+    const selectedQueueIndex = (): number => {
+        return queues.findIndex(q => q.queueId == selectedQueueId);
+    }
+
     const ping = (queueUserId: number, cancel: boolean = false) => {
         setOpen(false);
         setIsPing(true);
@@ -54,6 +62,20 @@ export default function Home() {
             .then(result => result.json())
             .then(data => { setQueues(data); setShowLoading(false); })
             .catch(error => alert(error));
+    }
+
+    const queueMove = (queueId: number, position: number) => {
+        setShowLoading(true);
+        fetch(`http://192.168.88.24:3002/Api/QueueMove?queueId=${queueId}&position=${position}`)
+            .then(result => result.json())
+            .then(data => { setQueues(data); splideMove(selectedQueueIndex() + position); setShowLoading(false); })
+            .catch(error => alert(error));
+    }
+
+    const splideMove = (index: number) => {
+        if (splide.current) {
+            splide.current?.splide.go(index);
+        }
     }
 
     useEffect(() => {
@@ -83,12 +105,12 @@ export default function Home() {
                         {/* <MenuItem id={5} text='جستجو' subtitle='جستجو در لیست انتظار' iconType={IconType.Search} /> */}
                         {/* <MenuItem id={6} text='حذف لیست' subtitle='حذف لیست انتظار' iconType={IconType.Delete} /> */}
                     </Menu>}
-                    {editMode && <Menu onItemSelect={(id) => { setSelectedMenuId(id); setOpen(true) }}>
-                        <MenuItem id={10} text='جابجایی لیست به سمت راست' subtitle='جابجایی اولویت نمایش صف' iconType={IconType.MoveRight} disabled={true} />
-                        <MenuItem id={11} text='جابجایی لیست به سمت چپ' subtitle='جابجایی اولویت نمایش صف' iconType={IconType.MoveLeft} />
+                    {editMode && <Menu>
+                        <MenuItem id={10} text='جابجایی لیست به سمت راست' subtitle='جابجایی اولویت نمایش صف' iconType={IconType.MoveRight} disabled={selectedQueueIndex() === 0} onclick={() => queueMove(selectedQueueId, -1)} />
+                        <MenuItem id={11} text='جابجایی لیست به سمت چپ' subtitle='جابجایی اولویت نمایش صف' iconType={IconType.MoveLeft} disabled={selectedQueueIndex() === queues.length - 1} onclick={() => queueMove(selectedQueueId, 1)} />
                         <MenuItem id={12} text='تغییر نام لیست' subtitle='ویرایش نام لیست انتخاب شده' iconType={IconType.Rename} /*onclick={getQueues}*/ />
-                        <MenuItem id={13} text='خالی نمودن لیست' subtitle='بایگانی افراد داخل لیست' iconType={IconType.Archive} iconColor='bg-red-700'/>
-                        <MenuItem id={14} text='حذف لیست' subtitle='حذف لیست انتظار' iconType={IconType.Delete} iconColor='bg-red-700'/>
+                        <MenuItem id={13} text='خالی نمودن لیست' subtitle='بایگانی افراد داخل لیست' iconType={IconType.Archive} iconColor='bg-red-700' />
+                        <MenuItem id={14} text='حذف لیست' subtitle='حذف لیست انتظار' iconType={IconType.Delete} iconColor='bg-red-700' />
                     </Menu>}
                 </div>
                 <div className='flex-none h-20'>
