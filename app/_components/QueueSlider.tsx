@@ -3,7 +3,7 @@ import QueueSlide from "./QueueSlide";
 import { Dispatch, RefObject, SetStateAction } from "react";
 import { Queue } from "./types";
 
-export default function QueueSlider({ queues, splide, showLoading, setSelectedQueueId }: { queues: Queue[], splide: RefObject<any>, showLoading: boolean, setSelectedQueueId: Dispatch<SetStateAction<number>> }) {
+export default function QueueSlider({ queues, splide, showLoading, setSelectedQueueId, editMode }: { queues: Queue[], splide: RefObject<any>, showLoading: boolean, setSelectedQueueId: Dispatch<SetStateAction<number>>, editMode? : boolean }) {
     return (<div className="relative aspect-19/9">
         {showLoading &&
             <>
@@ -41,6 +41,7 @@ export default function QueueSlider({ queues, splide, showLoading, setSelectedQu
             <QueueSlide queueId={1} name='ظرفیت سه نفره' waitingNumber={10} totalNumber={40} colorCSS='bg-gradient-2' />
             <QueueSlide queueId={1} name='ظرفیت چهار نفره' waitingNumber={8} totalNumber={10} colorCSS='bg-gradient-3' /> */}
 
+            {!editMode &&  
                 <SplideSlide>
                     <div className="flex pt-4 mx-2 ">
                         <div className="relative w-full aspect-19/9 border-2 border-dashed border-gray-400 bg-linear-to-r from-neutral-100 to-gray-300 rounded-3xl flex flex-col items-center justify-center">
@@ -53,7 +54,7 @@ export default function QueueSlider({ queues, splide, showLoading, setSelectedQu
                             <div className='bottom-5 text-center font-bold text-gray-400 pt-3'>ساخت لیست جدید</div>
                         </div>
                     </div>
-                </SplideSlide>
+                </SplideSlide>}
             </SplideTrack>
 
             <div className="splide__arrows">

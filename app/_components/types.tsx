@@ -5,7 +5,9 @@ export type MenuItemType = {
     id: number,
     text: string,
     subtitle: string,
-    iconType: IconType
+    iconType: IconType,
+    disabled?: boolean,
+    iconColor?: string,
     onclick?: () => void,
     onItemSelect?: (id: number) => void
 }

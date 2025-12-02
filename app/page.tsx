@@ -21,6 +21,7 @@ export default function Home() {
     const snapPoints = [0, 1];
 
     const [isOpen, setOpen] = useState(false);
+    const [editMode, setEditMode] = useState(false);
     const [queues, setQueues] = useState<Queue[]>([]);
     const [showLoading, setShowLoading] = useState<boolean>(true);
 
@@ -65,23 +66,30 @@ export default function Home() {
     }, []);
 
     return (
-        <AppContext value={{ isOpen: isOpen, setOpen: setOpen, reload: getQueues, ping: ping }}>
+        <AppContext value={{ isOpen: isOpen, setOpen: setOpen, editMode: editMode, setEditMode: setEditMode, reload: getQueues, ping: ping }}>
             <div><Toaster /></div>
             {/* <div className='fixed inset-0 bg-black/10 backdrop-blur-xs transition-all duration-300 z-[999]'></div> */}
             <div className='max-w-lg mx-auto bg-gray-50 relative flex flex-col h-full'>
                 <TopBar title='رستوران فرناز' />
                 <div className='flex-none'>
-                    <QueueSlider showLoading={showLoading} queues={queues} setSelectedQueueId={setSelectedQueueId} splide={splide} />
+                    <QueueSlider showLoading={showLoading} queues={queues} setSelectedQueueId={setSelectedQueueId} splide={splide} editMode={editMode} />
                 </div>
                 <div className='grow overflow-auto bg-gray-50'>
-                    <Menu onItemSelect={(id) => { setSelectedMenuId(id); setOpen(true) }}>
+                    {!editMode && selectedQueueId !== 0 && <Menu onItemSelect={(id) => { setSelectedMenuId(id); setOpen(true) }}>
                         <MenuItem id={1} text='افزودن به لیست انتظار' subtitle='افزودن فرد جدید به لیست انتظار' iconType={IconType.AddPerson} />
                         <MenuItem id={4} text='لیست انتظار' subtitle='نمایش افراد در لیست انتظار' iconType={IconType.Group} />
                         <MenuItem id={2} text='فراخوانی خودکار' subtitle='فراخوانی نفر اول لیست انتظار' iconType={IconType.Dial} /*onclick={getQueues}*/ />
                         <MenuItem id={3} text='فراخوانی با تگ' subtitle='فراخوانی از طریق تگ فراخوانی' iconType={IconType.Tag} />
                         {/* <MenuItem id={5} text='جستجو' subtitle='جستجو در لیست انتظار' iconType={IconType.Search} /> */}
                         {/* <MenuItem id={6} text='حذف لیست' subtitle='حذف لیست انتظار' iconType={IconType.Delete} /> */}
-                    </Menu>
+                    </Menu>}
+                    {editMode && <Menu onItemSelect={(id) => { setSelectedMenuId(id); setOpen(true) }}>
+                        <MenuItem id={10} text='جابجایی لیست به سمت راست' subtitle='جابجایی اولویت نمایش صف' iconType={IconType.MoveRight} disabled={true} />
+                        <MenuItem id={11} text='جابجایی لیست به سمت چپ' subtitle='جابجایی اولویت نمایش صف' iconType={IconType.MoveLeft} />
+                        <MenuItem id={12} text='تغییر نام لیست' subtitle='ویرایش نام لیست انتخاب شده' iconType={IconType.Rename} /*onclick={getQueues}*/ />
+                        <MenuItem id={13} text='خالی نمودن لیست' subtitle='بایگانی افراد داخل لیست' iconType={IconType.Archive} iconColor='bg-red-700'/>
+                        <MenuItem id={14} text='حذف لیست' subtitle='حذف لیست انتظار' iconType={IconType.Delete} iconColor='bg-red-700'/>
+                    </Menu>}
                 </div>
                 <div className='flex-none h-20'>
 

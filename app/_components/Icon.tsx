@@ -6,7 +6,11 @@ export enum IconType {
     Group = "group",
     Search = "search",
     Delete = "delete",
-    Tag = "tag"
+    Tag = "tag",
+    MoveRight = "moveRight",
+    MoveLeft = "moveLeft",
+    Archive = "archive",
+    Rename = "rename"
 }
 
 const iconMap: Record<IconType, React.ComponentType<any>> = {
@@ -16,6 +20,10 @@ const iconMap: Record<IconType, React.ComponentType<any>> = {
     [IconType.Search]: SearchIcon,
     [IconType.Delete]: DeleteIcon,
     [IconType.Tag]: TagIcon,
+    [IconType.MoveRight]: MoveRightIcon,
+    [IconType.MoveLeft]: MoveLeftIcon,
+    [IconType.Archive]: ArchiveIcon,
+    [IconType.Rename]: RenameIcon,
 }
 
 interface IconProps {
@@ -62,11 +70,40 @@ function DeleteIcon() {
     </svg>);
 }
 
-function TagIcon(){
+function TagIcon() {
     return (<svg className="w-6 h-6 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-        <path stroke="currentColor" strokeLinecap="round" strokeWidth="2" d="M2.9917 4.9834V18.917M9.96265 4.9834V18.917M15.9378 4.9834V18.917m2.9875-13.9336V18.917"/>
-        <path stroke="currentColor" strokeLinecap="round" d="M5.47925 4.4834V19.417m1.9917-14.9336V19.417M21.4129 4.4834V19.417M13.4461 4.4834V19.417"/>
-      </svg>);
+        <path stroke="currentColor" strokeLinecap="round" strokeWidth="2" d="M2.9917 4.9834V18.917M9.96265 4.9834V18.917M15.9378 4.9834V18.917m2.9875-13.9336V18.917" />
+        <path stroke="currentColor" strokeLinecap="round" d="M5.47925 4.4834V19.417m1.9917-14.9336V19.417M21.4129 4.4834V19.417M13.4461 4.4834V19.417" />
+    </svg>);
+}
+
+function MoveRightIcon() {
+    return (<svg className="w-6 h-6 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20 12H8m12 0-4 4m4-4-4-4M9 4H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h2" />
+    </svg >
+    );
+}
+
+function MoveLeftIcon() {
+    return (<svg className="w-6 h-6 -ml-1 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20 12H8m12 0-4 4m4-4-4-4M9 4H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h2" transform="rotate(180, 12, 12)" />
+    </svg >
+    );
+}
+
+function ArchiveIcon() {
+    return (<svg className="w-6 h-6 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <path stroke="currentColor" strokeLinejoin="round" strokeWidth="2" d="M10 12v1h4v-1m4 7H6a1 1 0 0 1-1-1V9h14v9a1 1 0 0 1-1 1ZM4 5h16a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z" />
+    </svg>
+    );
+}
+
+function RenameIcon() {
+    return (<svg className="w-6 h-6 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7.556 8.5h8m-8 3.5H12m7.111-7H4.89a.896.896 0 0 0-.629.256.868.868 0 0 0-.26.619v9.25c0 .232.094.455.26.619A.896.896 0 0 0 4.89 16H9l3 4 3-4h4.111a.896.896 0 0 0 .629-.256.868.868 0 0 0 .26-.619v-9.25a.868.868 0 0 0-.26-.619.896.896 0 0 0-.63-.256Z" />
+    </svg>
+
+    );
 }
 
 
