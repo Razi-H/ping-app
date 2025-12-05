@@ -15,6 +15,8 @@ import AppContext from './AppContext';
 import QueueUser from './Home/QueueUser';
 import toast, { Toaster, toast as toastEvent, useToaster } from 'react-hot-toast';
 import PingTag from './Home/PingTag';
+import QueueEdit, { QueueMode } from './Home/QueueEdit';
+import QueueDelete from './Home/QueueDelete';
 
 export default function Home() {
     const splide = useRef<any>(null);
@@ -88,7 +90,7 @@ export default function Home() {
     }, []);
 
     return (
-        <AppContext value={{ isOpen: isOpen, setOpen: setOpen, editMode: editMode, setEditMode: setEditMode, reload: getQueues, ping: ping }}>
+        <AppContext value={{ isOpen: isOpen, setOpen: setOpen, editMode: editMode, setEditMode: setEditMode, reload: getQueues, ping: ping, queue: selectedQueue(), organizationId: 1 }}>
             <div><Toaster /></div>
             {/* <div className='fixed inset-0 bg-black/10 backdrop-blur-xs transition-all duration-300 z-[999]'></div> */}
             <div className='max-w-lg mx-auto bg-gray-50 relative flex flex-col h-full'>
@@ -108,10 +110,15 @@ export default function Home() {
                     {editMode && <Menu>
                         <MenuItem id={10} text='جابجایی لیست به سمت راست' subtitle='جابجایی اولویت نمایش صف' iconType={IconType.MoveRight} disabled={selectedQueueIndex() === 0} onclick={() => queueMove(selectedQueueId, -1)} />
                         <MenuItem id={11} text='جابجایی لیست به سمت چپ' subtitle='جابجایی اولویت نمایش صف' iconType={IconType.MoveLeft} disabled={selectedQueueIndex() === queues.length - 1} onclick={() => queueMove(selectedQueueId, 1)} />
-                        <MenuItem id={12} text='تغییر نام لیست' subtitle='ویرایش نام لیست انتخاب شده' iconType={IconType.Rename} /*onclick={getQueues}*/ />
-                        <MenuItem id={13} text='خالی نمودن لیست' subtitle='بایگانی افراد داخل لیست' iconType={IconType.Archive} iconColor='bg-red-700' />
-                        <MenuItem id={14} text='حذف لیست' subtitle='حذف لیست انتظار' iconType={IconType.Delete} iconColor='bg-red-700' />
+                        <MenuItem id={12} text='به روزرسانی لیست' subtitle='به روزرسانی مشخصات لیست' iconType={IconType.Rename} onclick={() => { setSelectedMenuId(12); setOpen(true) }} />
+                        <MenuItem id={13} text='خالی نمودن لیست' subtitle='بایگانی افراد داخل لیست' iconType={IconType.Archive} iconColor='bg-red-700' onclick={() => { setSelectedMenuId(13); setOpen(true) }}  />
+                        <MenuItem id={14} text='حذف لیست' subtitle='حذف لیست انتظار' iconType={IconType.Delete} iconColor='bg-red-700' onclick={() => { setSelectedMenuId(14); setOpen(true) }} />
                     </Menu>}
+                    {!editMode && selectedQueueId === 0 && <Menu onItemSelect={(id) => { setSelectedMenuId(id); setOpen(true) }}>
+                        <MenuItem id={0} text='ساخت لیست جدید' subtitle='ساخت لیست انتظار جدید' iconType={IconType.QueueAdd} />
+                    </Menu>
+
+                    }
                 </div>
                 <div className='flex-none h-20'>
 
@@ -135,10 +142,13 @@ export default function Home() {
                     </div>
                 </div> */}
                 <MySheet>
+                    {selectedMenuId === 0 && <QueueEdit queueId={selectedQueueId} queueMode={QueueMode.Add} />}
                     {selectedMenuId === 1 && <AddUser queueId={selectedQueueId} />}
                     {selectedMenuId === 2 && <QueueUser queueId={selectedQueueId} />}
                     {selectedMenuId === 4 && <WaitingList queueId={selectedQueueId} />}
                     {selectedMenuId === 3 && <PingTag queueId={selectedQueueId} />}
+                    {selectedMenuId === 12 && <QueueEdit queueId={selectedQueueId} queueMode={QueueMode.Edit} />}
+                    {selectedMenuId === 14 && <QueueDelete queueId={selectedQueueId} />}
                 </MySheet>
                 <BottomBar />
             </div>
