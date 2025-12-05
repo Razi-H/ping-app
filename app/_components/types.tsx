@@ -13,10 +13,12 @@ export type MenuItemType = {
 }
 
 export type Queue = {
+    organizationId? :number,
     queueId: number,
     name: string,
     colorId?: number,
     totalNumber: number,
     waitingNumber: number,
+    prompt?: string,
     colorCSS?: string
 };

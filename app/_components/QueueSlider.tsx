@@ -30,7 +30,9 @@ export default function QueueSlider({ queues, splide, showLoading, setSelectedQu
             fixedWidth: '100%'
             // waitForTransition: true,
         }} aria-label="My Favorite Images" hasTrack={false}
-            onActive={(splide, slide) => { setSelectedQueueId(parseInt(slide.slide.dataset.key != undefined ? slide.slide.dataset.key : "0")) }} ref={splide}>
+            onActive={(splide, slide) => { setSelectedQueueId(parseInt(slide.slide.dataset.key != undefined ? slide.slide.dataset.key : "0")) }}
+            onMove={(splide, index, prev, dest) => { let slide = splide.Components.Slides.getAt(dest); setSelectedQueueId(parseInt(slide?.slide.dataset.key != undefined ? slide?.slide.dataset.key : "0")) }}
+            ref={splide}>
             <SplideTrack>
                 {queues.map((item, index) => {
                     //console.log(item);
@@ -41,20 +43,20 @@ export default function QueueSlider({ queues, splide, showLoading, setSelectedQu
             <QueueSlide queueId={1} name='ظرفیت سه نفره' waitingNumber={10} totalNumber={40} colorCSS='bg-gradient-2' />
             <QueueSlide queueId={1} name='ظرفیت چهار نفره' waitingNumber={8} totalNumber={10} colorCSS='bg-gradient-3' /> */}
 
-            {!editMode &&  
-                <SplideSlide>
-                    <div className="flex pt-4 mx-2 ">
-                        <div className="relative w-full aspect-19/9 border-2 border-dashed border-gray-400 bg-linear-to-r from-neutral-100 to-gray-300 rounded-3xl flex flex-col items-center justify-center">
-                            {/* <div className='w-15 aspect-[1/1] border-2 border-dashed border-gray-400 rounded-2xl flex justify-center items-center'> */}
-                            <svg className="w-16 h-16 text-gray-400 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                                <path fillRule="evenodd" d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm11-4.243a1 1 0 1 0-2 0V11H7.757a1 1 0 1 0 0 2H11v3.243a1 1 0 1 0 2 0V13h3.243a1 1 0 1 0 0-2H13V7.757Z" clipRule="evenodd" />
-                            </svg>
+                {!editMode &&
+                    <SplideSlide>
+                        <div className="flex pt-4 mx-2 ">
+                            <div className="relative w-full aspect-19/9 border-2 border-dashed border-gray-400 bg-linear-to-r from-neutral-100 to-gray-300 rounded-3xl flex flex-col items-center justify-center">
+                                {/* <div className='w-15 aspect-[1/1] border-2 border-dashed border-gray-400 rounded-2xl flex justify-center items-center'> */}
+                                <svg className="w-16 h-16 text-gray-400 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                    <path fillRule="evenodd" d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm11-4.243a1 1 0 1 0-2 0V11H7.757a1 1 0 1 0 0 2H11v3.243a1 1 0 1 0 2 0V13h3.243a1 1 0 1 0 0-2H13V7.757Z" clipRule="evenodd" />
+                                </svg>
 
-                            {/* </div> */}
-                            <div className='bottom-5 text-center font-bold text-gray-400 pt-3'>ساخت لیست جدید</div>
+                                {/* </div> */}
+                                <div className='bottom-5 text-center font-bold text-gray-400 pt-3'>لیست جدید</div>
+                            </div>
                         </div>
-                    </div>
-                </SplideSlide>}
+                    </SplideSlide>}
             </SplideTrack>
 
             <div className="splide__arrows">
