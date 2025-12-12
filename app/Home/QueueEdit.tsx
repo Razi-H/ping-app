@@ -27,7 +27,7 @@ export default function QueueEdit({ queueId, queueMode }: { queueId: number, que
 
     const post = (data: object) => {
         fetch("http://192.168.88.24:3002/Api/Queue", {
-            method: queueMode == QueueMode.Add ? "POST" : "PATCH",
+            method: queueMode == QueueMode.Add ? "PUT" : "PATCH",
             headers: {
                 "Content-Type": "application/json",
             },
